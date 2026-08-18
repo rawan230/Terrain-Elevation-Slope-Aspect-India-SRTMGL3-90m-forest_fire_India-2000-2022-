@@ -1,0 +1,23 @@
+# Raw source data — never commit, download instructions in README instead
+*.osm.pbf
+*.gpkg
+*.gpkg.zip
+*.shp
+*.shx
+*.dbf
+*.prj
+*.cpg
+*.zip
+*.tif
+*.tiff
+!Terrain_Outputs/*_sample*.tif
+!Accessibility_Outputs/*_sample*.tif
+
+# Jupyter / Python
+.ipynb_checkpoints/
+__pycache__/
+*.pyc
+
+# OS cruft
+.DS_Store
+Thumbs.db

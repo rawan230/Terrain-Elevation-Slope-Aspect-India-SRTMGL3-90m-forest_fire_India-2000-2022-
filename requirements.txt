@@ -1,0 +1,19 @@
+# Terrain_Elevation_Slope_Aspect_Analysis (Step 5a) — matches the firerisk-anaconda3
+# base environment already used by Steps 4, 6, 7, 8 (Python 3.12.7,
+# C:\Users\Admin\anaconda3\python.exe)
+geopandas>=1.1
+rasterio>=1.5
+pyogrio>=0.12
+shapely>=2.1
+scipy>=1.18
+numpy
+pandas
+matplotlib
+cupy-cuda12x  # GPU acceleration; falls back to CPU (numpy/scipy) automatically if no CUDA device
+
+# Note: fiona is intentionally NOT required — geopandas 1.1+ uses the pyogrio engine
+# by default, which is already faster and doesn't have fiona's DLL-load fragility on
+# Windows (confirmed broken in this project's own anaconda3 install, 2026-08-18).
+# Slope/aspect are computed with a project-native GPU-vectorized Horn's-method
+# implementation (numpy/cupy gradient), not richdem — avoids richdem's fragile C++
+# build on Windows and keeps the GPU pattern consistent with every other step.
