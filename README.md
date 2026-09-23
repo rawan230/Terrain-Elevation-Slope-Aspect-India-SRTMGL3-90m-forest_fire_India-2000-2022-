@@ -22,7 +22,28 @@ topographic/biophysical factors — **slope** (5.6% variable importance / **16.7
 contribution** — their *second-highest* contribution variable after NDVI), **aspect**
 (1.7% / 3.8%), and **elevation** (2.4% / 2.0%). Combined, these three account for
 **9.7%** of their model's total contribution. The other 3 missing variables (distance
-to roads/railways/waterways) are the sibling repo's Step 5b.
+to roads/railways/waterways) are the sibling repo's Step 5b. Together, Step 5a + 5b
+close all 6 of the pipeline's remaining gaps, bringing the full pipeline (Steps 1–4 plus
+this pair) to **15/15 predictor-group parity** with Biswas et al.'s Table 3 — wired
+into Step 6's integrated stack on 2026-08-20.
+
+## Why this step, and how (plain-language walkthrough)
+
+Terrain shapes fire behavior through three distinct, well-established mechanisms: fires
+spread faster moving **upslope** because radiant and convective heat preheats and dries
+uphill fuel ahead of the flame front before it arrives (Rothermel 1972 — the standard
+wildfire-spread-model justification for slope's outsized effect); **aspect** controls
+solar exposure, so south/southwest-facing slopes in the northern hemisphere receive more
+direct insolation, run drier, and carry more flammable fuel than north-facing slopes;
+and **elevation** is a proxy for temperature and vegetation-zone gradients that jointly
+shape fuel type and moisture. These three variables were the last topographic gap in
+this pipeline — everything else (NDVI, LST, FLDAS climatic variables, land cover) was
+already built by Steps 2–4, but terrain itself had zero coverage until this step was
+added 2026-08-18/19/20. The output here (six GeoTIFFs: elevation, slope, aspect ×
+native-1km and 0.25°-comparison) is consumed by Step 6, which stacks it alongside every
+other step's rasters into the single `Integrated_FireRisk_Stack.tif` /
+`Integrated_FireRisk_Pixels.parquet` that Step 7's Random Forest/MaxEnt models and
+Step 8's CDR-PINN both train on directly.
 
 ## Method
 
@@ -65,7 +86,29 @@ matters for a specific downstream use.
   (203° vs. 162° nationally), plausible given higher solar insolation/fuel dryness on
   south/southwest slopes in the northern hemisphere.
 
-## Against Biswas et al. (2025)
+## Comparison against Biswas et al. (2025)
+
+This project computes slope and aspect from a **90m-native SRTMGL3 DEM** using a
+GPU-vectorized implementation of **Horn's (1981)** 3×3-kernel gradient method — the same
+algorithm ArcGIS/QGIS/GDAL's `gdaldem` and `richdem` use internally — computed *before*
+resampling to the shared ~1km grid, so the terrain detail a downsampled DEM would smooth
+away is preserved. Biswas et al.'s Table 2 names neither a DEM source/resolution nor a
+gradient algorithm, so their slope/aspect were evidently rasterized directly at their
+0.25° MaxEnt working resolution from an unspecified terrain product — a real
+methodological gap in the reference paper this project's own disclosure makes explicit
+rather than silently assuming a match.
+
+This step also runs an **independent empirical cross-check** Biswas et al. do not
+perform: real Step 1 fire points sit at a mean slope of 12.3° vs. 5.7° nationally — a
+**+115%** enrichment. That result is not a novel claim on its own; it is a direct,
+field-measurement corroboration of the same physical mechanism (upslope fire-spread
+acceleration via fuel preheating, Rothermel 1972) that independently explains *why*
+Biswas et al.'s own MaxEnt model ranks slope as its second-highest contribution
+variable (16.7%, behind only NDVI) despite a comparatively modest 5.6% importance score.
+Two independent studies — different DEM source, different gradient algorithm, different
+statistical framework (MaxEnt contribution vs. this project's fire-point enrichment
+ratio) — converging on the same physical driver is a stronger claim for a Q1 submission
+than either result alone.
 
 | Variable | Their importance | Their contribution | Status |
 |---|---:|---:|---|
@@ -128,6 +171,12 @@ existing locations in the wider project, never copied into this repo).
   in India: a machine learning approach for improved risk assessment and early
   warning systems. *Environmental Science and Pollution Research*, 32(8), 4856–4878.
   DOI: 10.1007/s11356-025-35982-8.
+- Horn, B.K.P. (1981). Hill shading and the reflectance map. *Proceedings of the
+  IEEE*, 69(1), 14–47. DOI: 10.1109/PROC.1981.11918. — the gradient method this
+  step's slope/aspect computation is based on.
+- Rothermel, R.C. (1972). *A mathematical model for predicting fire spread in
+  wildland fuels.* USDA Forest Service Research Paper INT-115. — the physical basis
+  cited for slope-driven upslope fire-spread acceleration via fuel preheating.
 
 ## License
 
