@@ -21,7 +21,11 @@ This notebook builds 3 of the 6 variables this pipeline had zero coverage of: th
 topographic/biophysical factors — **slope** (5.6% variable importance / **16.7% model
 contribution** — their *second-highest* contribution variable after NDVI), **aspect**
 (1.7% / 3.8%), and **elevation** (2.4% / 2.0%). Combined, these three account for
-**9.7%** of their model's total contribution. The other 3 missing variables (distance
+**9.7% of their model's total importance and 22.5% of its total contribution**
+(**corrected 2026-09-23** — an earlier version of this sentence mislabeled the
+importance sum as a contribution sum; the true combined contribution is
+substantially higher because slope's own 16.7% contribution dominates the group).
+The other 3 missing variables (distance
 to roads/railways/waterways) are the sibling repo's Step 5b. Together, Step 5a + 5b
 close all 6 of the pipeline's remaining gaps, bringing the full pipeline (Steps 1–4 plus
 this pair) to **15/15 predictor-group parity** with Biswas et al.'s Table 3 — wired
