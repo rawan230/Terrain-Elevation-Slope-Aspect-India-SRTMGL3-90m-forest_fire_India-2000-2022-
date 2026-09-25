@@ -7,6 +7,12 @@
 > Earlier text below is kept for the record (it also remains in the git history). Statements superseded by the audit:
 >
 > - **−46.9 m elevation**: located at the Neyveli open-cast lignite mines; most likely real terrain, not an SRTM artefact.
+>
+> **Pipeline rerun (2026-09-25).** The notebook was corrected and re-executed end-to-end, and the result tables below now come from that rerun:
+> - Fire points are rasterised to their *containing* pixel (`floor`, not `round`, which displaced 74.9% of points by one pixel).
+> - Statistics use the final India mask (4,160,963 valid DEM pixels within Step 6's 4,161,009-pixel India grid).
+>
+> The previous values used an earlier, wider mask (4,173,743 pixels); they are in the git history. The rerun elevation mean (736.53 m) matches the independent audit recalculation (`audit_2026-09-25/results/R6_report.json`, r = 0.9999999993).
 <!-- AUDIT-UPDATE-2026-09-25 -->
 
 
@@ -74,31 +80,32 @@ south to north — a flat degree→km conversion would bias every gradient).
 
 | Variable | Resolution | Min | Max | Mean | P95 |
 |---|---|---:|---:|---:|---:|
-| Elevation (m) | native ~1km | −46.9 | 8,169.0 | 737.2 | 4,406.5 |
+| Elevation (m) | native ~1km | −46.9 | 8,068.9 | 736.5 | 4,400.7 |
 | Elevation (m) | 0.25° comparison | −0.2 | 6,163.2 | 771.2 | — |
-| Slope (°) | native ~1km | 0.00 | 77.31 | 5.72 | 28.66 |
+| Slope (°) | native ~1km | 0.00 | 69.63 | 5.72 | 28.65 |
 | Slope (°) | 0.25° comparison | 0.00 | 38.36 | 5.95 | — |
-| Aspect | native ~1km | — | — | 161.6° (S), circular mean | — |
+| Aspect | native ~1km | — | — | 161.1° (S), circular mean | — |
 
 **The −46.9m elevation minimum is a known, disclosed artifact, not a data error** — the
 notebook's own physical-plausibility check flagged it. It's a tail effect only (p5 is
-already +25.0m); most likely a known SRTM radar-return artifact over a lake or reservoir.
+already +25.9m). The audit located it at the Neyveli open-cast lignite mines, so it is most likely real terrain, not an SRTM artifact.
 Not yet masked out — worth a one-line footnote in the paper, or a targeted patch if it
 matters for a specific downstream use.
 
-## Fire coincidence (541,545 real Step 1 fire points)
+## Fire coincidence (all 541,545 Step 1 fire points; rerun 2026-09-25)
 
-- **Slope** — fires sit at **12.3° mean vs. 5.7° nationally** (+115%). Directly
+- **Slope** — fires sit at **12.35° mean vs. 5.72° nationally** (+116%). Directly
   corroborates Biswas et al.'s own finding that slope is their *second*-most-important
   variable (16.7% model contribution, behind only NDVI). 15–20° slopes are 4.8×
-  overrepresented among fires; flat terrain (0–5°) is strongly underrepresented (0.34×).
-- **Elevation** — non-monotonic: mid-forest bands (500–2000m) are 2–5.3× overrepresented,
-  while both low-lying agricultural land (<200m, 0.39×) and high alpine terrain (>3000m,
-  0.029×) are strongly underrepresented.
+  overrepresented among fires; flat terrain (0–5°) is strongly underrepresented (0.33×).
+- **Elevation** — non-monotonic: mid-forest bands (500–2000m) are 2.0–5.2× overrepresented,
+  while both low-lying agricultural land (<200m, 0.40×) and high alpine terrain (>3000m,
+  0.032×) are strongly underrepresented. Fire-point mean elevation is 637.1 m vs. 736.5 m nationally (−13.5%).
 - **Aspect** — flat terrain is almost absent from fire points (0.06× enrichment),
-  consistent with the slope finding. Fire-point circular mean aspect skews southwest
-  (203° vs. 162° nationally), plausible given higher solar insolation/fuel dryness on
-  south/southwest slopes in the northern hemisphere.
+  consistent with the slope finding. Fire-point circular mean aspect is 249° (west-southwest)
+  vs. 161° nationally, and W/SW/NW are the most enriched sloped classes (2.11×, 1.77×, 1.83×).
+  This is plausible given the afternoon insolation and fuel dryness of west-facing slopes. The
+  pre-rerun value of 203° came from the `round` rasterisation, which shifted most points by one pixel.
 
 ## Comparison against Biswas et al. (2025)
 
@@ -113,8 +120,8 @@ methodological gap in the reference paper this project's own disclosure makes ex
 rather than silently assuming a match.
 
 This step also runs an **independent empirical cross-check** Biswas et al. do not
-perform: real Step 1 fire points sit at a mean slope of 12.3° vs. 5.7° nationally — a
-**+115%** enrichment. That result is not a novel claim on its own; it is a direct,
+perform: real Step 1 fire points sit at a mean slope of 12.35° vs. 5.72° nationally — a
+**+116%** enrichment. That result is not a novel claim on its own; it is a direct,
 field-measurement corroboration of the same physical mechanism (upslope fire-spread
 acceleration via fuel preheating, Rothermel 1972) that independently explains *why*
 Biswas et al.'s own MaxEnt model ranks slope as its second-highest contribution
