@@ -1,5 +1,15 @@
 # 🏔️ Step 5a — Terrain: Elevation, Slope, Aspect
 
+<!-- AUDIT-UPDATE-2026-09-25 -->
+> ### Audit update (2026-09-25)
+> This repository's step was recalculated independently from the raw data in a full end-to-end audit.
+> **Corrected results, reproduction checks and audit code: [`AUDIT_2026-09-25.md`](AUDIT_2026-09-25.md)** and `audit_2026-09-25/`.
+> Earlier text below is kept for the record (it also remains in the git history). Statements superseded by the audit:
+>
+> - **−46.9 m elevation**: located at the Neyveli open-cast lignite mines; most likely real terrain, not an SRTM artefact.
+<!-- AUDIT-UPDATE-2026-09-25 -->
+
+
 **Notebook:** [`Step5a_Terrain_Elevation_Slope_Aspect.ipynb`](Step5a_Terrain_Elevation_Slope_Aspect.ipynb)
 **Kernel:** `firerisk-anaconda3` (Python 3.12.7, base `C:\Users\Admin\anaconda3\python.exe`)
 

@@ -1,0 +1,167 @@
+{
+ "provenance": {
+  "timestamp": "2026-09-24T17:29:12",
+  "script": "results\\code\\recalc_06_terrain.py",
+  "script_sha256": "cc29d6ade0e8fa90095a0dd45d421536b56f9215e952aedd9b9436f2b1d2c5d9",
+  "repo_commits": {
+   "Forest fire Extraction in INDIA(2000-2022)": "a01fadb",
+   "NDVI_DATA_INDIA_": "1c274d6",
+   "LST_analysis": "7e5d870",
+   "FLDAS Noah Land Surface Model L4 Global Monthly 0.1 x 0.1 degree (MERRA-2 and CHIRPS) (FLDAS_NOAH01_C_GL_M)": "4dbe755",
+   "Terrain_Elevation_Slope_Aspect_Analysis": "e48a4a9",
+   "Distance_Roads_Railways_Waterways_Analysis": "c74ab6b",
+   "Integrated_Analysis": "3fcc34c",
+   "Physics_Informed_FireRisk_Model": "cd1d298"
+  },
+  "root_commit": "fb0d8aa"
+ },
+ "dem": {
+  "shape": [
+   37200,
+   35400
+  ],
+  "res_deg": 0.000833333333333144,
+  "nodata": 0.0,
+  "dtype": "int16"
+ },
+ "native_stats": {
+  "elev_min": -70.0,
+  "elev_max": 8550.0,
+  "n_native_below_minus10m": 1818,
+  "slope_horn_mean": 5.7110795974731445,
+  "slope_zt_mean": 5.956625461578369,
+  "slope_horn_max": 87.28804779052734
+ },
+ "parquet_comparison": [
+  {
+   "name": "elevation",
+   "n_compared": 4160963,
+   "n_nan_new_only": 0,
+   "n_nan_old_only": 46,
+   "max_abs_diff": 14.362622261047363,
+   "mean_abs_diff": 0.0011710048813133235,
+   "rmse": 0.04763278584494167,
+   "pearson_r": 0.9999999992682114,
+   "new_mean": 736.5317455360763,
+   "old_mean": 736.5328859888784,
+   "frac_exact": 0.9958843661911918,
+   "frac_within_1e4_rel": 0.9958846065201733
+  },
+  {
+   "name": "slope Horn",
+   "n_compared": 4160960,
+   "n_nan_new_only": 3,
+   "n_nan_old_only": 46,
+   "max_abs_diff": 8.07326889038086,
+   "mean_abs_diff": 0.0015332512130397484,
+   "rmse": 0.04604905641676718,
+   "pearson_r": 0.9999873720707604,
+   "new_mean": 5.7169993975593885,
+   "old_mean": 5.7167612594659145,
+   "frac_exact": 0.0010399042528647234,
+   "frac_within_1e4_rel": 0.9914728812581712
+  },
+  {
+   "name": "aspect (circular mean)",
+   "n_compared": 4156628,
+   "n_nan_new_only": 7,
+   "n_nan_old_only": 18,
+   "max_abs_diff": 359.9999694824219,
+   "mean_abs_diff": 0.1603239044905759,
+   "rmse": 5.314984817386117,
+   "pearson_r": 0.9986460265876572,
+   "new_mean": 178.6758294543727,
+   "old_mean": 178.67603583691854,
+   "frac_exact": 0.7681724224539699,
+   "frac_within_1e4_rel": 0.9912821161768626
+  }
+ ],
+ "slope_algorithm_sensitivity": {
+  "corr_horn_vs_zt": 0.9998330383972436,
+  "mean_horn": 5.716936111450195,
+  "mean_zt": 5.962280750274658,
+  "mean_abs_diff_deg": 0.24574758112430573,
+  "single_feature_auc_horn": 0.8003959116023853,
+  "single_feature_auc_zt": 0.8004757387311954,
+  "mean_slope_from_1km_dem": 2.533221299802827,
+  "single_feature_auc_slope_from_1km_dem": 0.7824422630572723,
+  "mean_slope_from_025deg_dem": 0.28731465339660645,
+  "single_feature_auc_slope_from_025deg_dem": 0.7354399613641343,
+  "corr_90m_horn_vs_025deg": 0.7039556859039715
+ },
+ "negative_elevation_artifact": {
+  "n_1km_pixels_below_minus5m": 12,
+  "min_1km": -46.86996841430664,
+  "locations": [
+   {
+    "lat": 12.220833332233312,
+    "lon": 92.73749999165256,
+    "elev": -5.495490550994873
+   },
+   {
+    "lat": 11.57083333229182,
+    "lon": 79.50416665951037,
+    "elev": -28.272476196289062
+   },
+   {
+    "lat": 11.56249999895924,
+    "lon": 79.50416665951037,
+    "elev": -41.96245574951172
+   },
+   {
+    "lat": 11.56249999895924,
+    "lon": 79.51249999284296,
+    "elev": -45.622528076171875
+   },
+   {
+    "lat": 11.554166665626653,
+    "lon": 79.50416665951037,
+    "elev": -22.222463607788086
+   },
+   {
+    "lat": 11.554166665626653,
+    "lon": 79.51249999284296,
+    "elev": -17.817485809326172
+   },
+   {
+    "lat": 11.529166665628907,
+    "lon": 79.47916665951263,
+    "elev": -11.749979972839355
+   },
+   {
+    "lat": 11.52083333229632,
+    "lon": 79.47916665951263,
+    "elev": -46.86996841430664
+   },
+   {
+    "lat": 11.52083333229632,
+    "lon": 79.4874999928452,
+    "elev": -43.277557373046875
+   },
+   {
+    "lat": 11.51249999896374,
+    "lon": 79.46249999284746,
+    "elev": -19.537473678588867
+   },
+   {
+    "lat": 11.51249999896374,
+    "lon": 79.47083332618004,
+    "elev": -38.00248336791992
+   },
+   {
+    "lat": 11.51249999896374,
+    "lon": 79.47916665951263,
+    "elev": -46.29001235961914
+   }
+  ]
+ },
+ "gmted_crosscheck": {
+  "name": "SRTM-derived vs GMTED2010 mean (NE India overlap only)",
+  "n_compared": 0,
+  "n_nan_new_only": 0,
+  "n_nan_old_only": 4161009
+ },
+ "runtime_sec": 276.879638671875,
+ "negative_elevation_interpretation": "11 of 12 pixels <-5 m cluster at 11.55-11.57N, 79.50-79.51E = Neyveli open-cast lignite mines (Tamil Nadu), whose pit floors lie below sea level: likely a REAL excavation surface, not an SRTM radar artefact as the gaps document states (location-based attribution; not field-verified). Remaining pixel: Andaman coast (-5.5 m).",
+ "gmted_note": "GMTED2010 tile 30N090E has no overlap with valid India pixels in this population; cross-check not possible with data on disk."
+}
