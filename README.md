@@ -10,7 +10,7 @@
 >
 > **Pipeline rerun (2026-09-25).** The notebook was corrected and re-executed end-to-end, and the result tables below now come from that rerun:
 > - Fire points are rasterised to their *containing* pixel (`floor`, not `round`, which displaced 74.9% of points by one pixel).
-> - Statistics use the final India mask (4,160,963 valid DEM pixels within Step 6's 4,161,009-pixel India grid).
+> - Statistics use the India mask of the NDVI reference raster at run time: 4,160,963 valid DEM pixels within 4,161,009 pixels. Step 2's v2 rerun later tightened that mask to 4,160,768, the pixel set of Step 6's v2 table. The difference of about 200 edge pixels leaves these summary statistics effectively unchanged, and Step 6 reads the rasters directly.
 >
 > The previous values used an earlier, wider mask (4,173,743 pixels); they are in the git history. The rerun elevation mean (736.53 m) matches the independent audit recalculation (`audit_2026-09-25/results/R6_report.json`, r = 0.9999999993).
 <!-- AUDIT-UPDATE-2026-09-25 -->
